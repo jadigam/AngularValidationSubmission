@@ -1,0 +1,110 @@
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<div class="container" id="container"ng-app="myapp" ng-controller="mycontroller"  >
+     
+     
+    <div>  
+    <form class="form-horizontal" role="form" name="myform" novalidate>
+  
+      <div class="form-group">
+         <label  for="focusedInput">First Name</label>
+		<input  class="form-control" type="text"  ng-model="user.firstname" name="firstname"  autofocus required/>
+   <div style="color:red" ng-show="myform.firstname.$dirty && myform.firstname.$invalid">
+<div ng-show="myform.firstname.$error.required">FirstName is required.</div>
+</div>     
+       </div>
+      <div class="form-group">
+        <label for="focusedInput">Last Name</label>
+		<input  class="form-control" type="text" name="lastname" ng-model="user.lastname" required="required" id="lname"  autofocus/>
+            <div style="color:red" ng-show="myform.lastname.$dirty && myform.lastname.$invalid">
+<div ng-show="myform.lastname.$error.required">LastName is required.</div>
+</div>     
+ 
+	  </div>
+  
+		<button type="button" class="btn btn-primary" id="nextpage" ng-click="next()">Next</button>
+  </form>
+  
+        </div> 	
+         
+  
+<div ng-show="NextPage">
+    <form class="form-horizontal" role="form"  name="secondform" novalidate>
+
+  <div class="form-group">
+        <label for="focusedInput">AddressOne</label>
+	    <input class="form-control"  type="text" ng-model="user.address1" required="required" name="address1" id="addOne" autofocus/>
+           <div style="color:red" ng-show="secondform.address1.$dirty && secondform.address1.$invalid">
+<div ng-show="secondform.address1.$error.required">Address is required.</div>
+</div> 
+    </div>
+      <div class="form-group">
+        <label for="focusedInput">AddressTwo</label>
+	    <input class="form-control"  type="text" ng-model="user.address2" name="address2" id="addTwo" autofocus/>
+    </div>
+      <div class="form-group">
+        <label for="focusedInput">City</label>
+	    <input class="form-control"  type="text" ng-model="user.city" name="city" id="city" autofocus/>
+    </div>
+   <div class="form-group">
+        <label for="focusedInput">State</label>
+	    <input class="form-control"  type="text" ng-model="user.state"  name="state" id="state" autofocus/>
+    </div>
+      <div class="form-group">
+	    <label for="focusedInput">ZipCode</label>
+	    <input class="form-control"  type="number" ng-model="user.zipcode" name="zipcode" id="zipcode" autofocus/>
+    </div>
+    <div>
+    <button type="button" class="btn btn-primary" id="complete" ng-click="complete(user)" >Finish</button>
+    </div>
+      
+    </form>
+</div>	
+    
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>  
+    
+  <pre ng-show="showjson">master = {{master | json}}</pre>
+    <div ng-show ="successmessage" name="successmessage" id="successmessage" >Form posted</div>
+</div>
+
+
+
+  
+<script type="text/javascript">
+
+var app=angular.module("myapp",[]);
+    
+    angular.module("myapp").controller('mycontroller',['$scope',function($scope){
+        
+        $scope.master={};
+        $scope.NextPage=false;
+        $scope.showjson=false;
+        $scope.successmessage=false;
+        
+        $scope.next=function(){
+            if($scope.myform.$valid)
+             $scope.NextPage=!$scope.NextPage;
+            
+            
+        }
+        
+         $scope.complete=function(user){
+             if($scope.secondform.$valid){
+                  $scope.master=angular.copy(user);
+                 $scope.showjson=true;
+                 $scope.successmessage=true;
+                 
+                  
+             }
+             else{
+                   $scope.showjson=false;
+             $scope.successmessage=false;
+               }
+         }
+    }]);
+    
+</script> 
